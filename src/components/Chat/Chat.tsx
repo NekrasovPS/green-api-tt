@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAuthStore } from "../../store/authStore";
 import { startPolling } from "../../utils/startPolling"; // Импортируем нашу утилиту
 import ChatContacts from "../ChatContacts/ChatContacts";
-import Messages from "../ChatMessages/ChatMessages";
+import ChatMessages from "../ChatMessages/ChatMessages";
 import styles from "./Chat.module.scss";
 
 function Chat() {
@@ -22,7 +22,7 @@ function Chat() {
   return (
     <div className={styles.chat}>
       <ChatContacts />
-      <Messages />
+      <ChatMessages />
     </div>
   );
 }

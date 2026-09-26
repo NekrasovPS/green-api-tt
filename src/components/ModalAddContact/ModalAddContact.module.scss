@@ -20,6 +20,8 @@
     padding: 30px;
     gap: 10px;
     position: relative;
+    width: 100%;
+    max-width: 500px;
   }
 
   &__title {
@@ -30,22 +32,31 @@
 
   &__input {
     margin-bottom: 10px;
-    padding: 5px 10px;
-    border-radius: 5px;
     width: 100%;
-    font-size: 14px;
+    padding: 15px;
+    border: none;
+    background-color: #282e33;
+    color: #fff;
+    border-bottom: 1px solid #434f58;
+  }
+
+  &__input:focus {
+    outline: none;
   }
 
   &__button {
     width: 100%;
-    height: 40px;
-    background-color: #3d444b;
-    color: #fff;
+    padding: 15px;
+    border-radius: 100px;
     border: none;
-    border-radius: 5px;
+    background-color: #282e33;
+    color: #fff;
     cursor: pointer;
-    font-size: 16px;
     transition: background-color 0.3s ease;
+  }
+
+  &__button:hover {
+    background-color: #434f58;
   }
 
   &__close {

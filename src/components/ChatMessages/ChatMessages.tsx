@@ -28,7 +28,10 @@ function ChatMessages() {
   if (!activeChatId) {
     return (
       <div className={styles.messagesEmpty}>
-        <p>Выберите контакт из списка слева, чтобы начать переписку.</p>
+        <p>
+          Добавте новый контакт или выберите контакт из списка слева, чтобы
+          начать переписку.
+        </p>
       </div>
     );
   }
@@ -36,7 +39,7 @@ function ChatMessages() {
   return (
     <div className={styles.messages}>
       <div className={styles.messages__header}>
-        <h3>Чат с ID: {activeChatId}</h3>
+        <h3>{activeChatId}</h3>
       </div>
 
       {/* Зона истории переписки */}
