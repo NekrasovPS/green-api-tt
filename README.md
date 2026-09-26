@@ -36,7 +36,7 @@
 1. Склонируйте репозиторий:
 
 ```bash
-git clone <ссылка-на-ваш-репозиторий>
+git clone https://github.com/NekrasovPS/green-api-tt.git
 ```
 
 2. Перейдите в директорию проекта:
