@@ -20,6 +20,7 @@ export type ContactState = {
   setContacts: (contacts: ContactData[]) => void;
   addContact: (contact: ContactData) => void;
   updateContactTelegramId: (phone: string, telegramId: string) => void;
+  clearContactData: () => void; // Добавили экшен очистки
 };
 
 export type Message = {

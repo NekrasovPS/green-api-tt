@@ -6,6 +6,7 @@ import { useAuthStore } from "./authStore";
 
 interface ExtendedChatState extends ChatState {
   sendMessageThunk: (phone: string, text: string) => Promise<void>;
+  clearChatData: () => void;
 }
 
 export const useChatStore = create<ExtendedChatState>()(
@@ -41,7 +42,6 @@ export const useChatStore = create<ExtendedChatState>()(
       sendMessageThunk: async (phone, text) => {
         const { idInstance, apiTokenInstance } = useAuthStore.getState();
 
-        // Временный ID для возможного отката
         const tempId = crypto.randomUUID();
         const newMessage: Message = {
           id: tempId,
@@ -61,7 +61,6 @@ export const useChatStore = create<ExtendedChatState>()(
         }));
 
         try {
-          // 2. Сетевой запрос
           await chatApi.sendMessage(idInstance, apiTokenInstance, phone, text);
         } catch (error) {
           console.error("Ошибка сети. Откат UI...", error);
@@ -73,6 +72,11 @@ export const useChatStore = create<ExtendedChatState>()(
           }));
           throw error;
         }
+      },
+
+      clearChatData: () => {
+        set({ activeChatId: null, messages: {} });
+        useChatStore.persist.clearStorage();
       },
     }),
     { name: "chat-storage" },

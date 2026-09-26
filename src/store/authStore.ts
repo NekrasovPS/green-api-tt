@@ -14,7 +14,10 @@ export const useAuthStore = create<AuthState>()(
           apiTokenInstance: data.apiTokenInstance,
         }),
 
-      clearAuthData: () => set({ idInstance: "", apiTokenInstance: "" }),
+      clearAuthData: () => {
+        set({ idInstance: "", apiTokenInstance: "" });
+        useAuthStore.persist.clearStorage();
+      },
     }),
     {
       name: "auth-storage",

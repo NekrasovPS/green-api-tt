@@ -18,6 +18,11 @@ export const useContactStore = create<ContactState>()(
             c.phone === phone ? { ...c, telegramId } : c,
           ),
         })),
+
+      clearContactData: () => {
+        set({ contacts: [] });
+        useContactStore.persist.clearStorage();
+      },
     }),
     {
       name: "contacts-storage",
