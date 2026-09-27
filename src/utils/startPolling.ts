@@ -28,22 +28,28 @@ export const startPolling = (config: PollingConfig) => {
         const receiptId = notification.receiptId;
 
         if (type === "incomingMessageReceived") {
-          const senderData = notification.body.senderData;
+          const senderData = notification.body?.senderData;
           const incomingChatId = String(senderData?.chatId || "");
-          const text = notification.body.messageData?.textMessageData?.textMessage;
+          const text = notification.body?.messageData?.textMessageData?.textMessage;
 
-          const isGroup = incomingChatId.startsWith("-") || senderData?.chatName;
+          const isTelegramGroup = incomingChatId.startsWith("-");
 
-          if (text && !isGroup) {
+          if (text && !isTelegramGroup) {
             const contacts = useContactStore.getState().contacts;
             const updateContactTelegramId = useContactStore.getState().updateContactTelegramId;
             const receiveMessage = useChatStore.getState().receiveMessage;
+            const activeChatId = useChatStore.getState().activeChatId;
 
             let targetContact = contacts.find((c) => c.telegramId === incomingChatId);
 
             if (!targetContact) {
-              const cleanSender = String(senderData?.sender || "").split("@")[0];
-              targetContact = contacts.find((c) => c.phone === cleanSender);
+              if (activeChatId) {
+                targetContact = contacts.find((c) => c.phone === activeChatId);
+              }
+
+              if (!targetContact) {
+                targetContact = contacts.find((c) => !c.telegramId);
+              }
 
               if (targetContact) {
                 updateContactTelegramId(targetContact.phone, incomingChatId);
@@ -52,6 +58,8 @@ export const startPolling = (config: PollingConfig) => {
 
             if (targetContact) {
               receiveMessage(targetContact.phone, text);
+            } else if (activeChatId) {
+              receiveMessage(activeChatId, text);
             } else {
               receiveMessage(incomingChatId, text);
             }
